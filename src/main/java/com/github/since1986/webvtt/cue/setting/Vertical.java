@@ -1,12 +1,6 @@
 package com.github.since1986.webvtt.cue.setting;
 
-public record Vertical(Vertical.Direction direction) implements EnumSetting {
-
-    @Override
-    public Vertical from(String s) {
-        return null;
-    }
-
+public record Vertical(_Vertical vertical) implements EnumSetting {
 
     @Override
     public String key() {
@@ -14,11 +8,15 @@ public record Vertical(Vertical.Direction direction) implements EnumSetting {
     }
 
     @Override
-    public Vertical.Direction value() {
-        return direction;
+    public _Vertical value() {
+        return vertical;
     }
 
-    public enum Direction {
+    public enum _Vertical {
         RL, LR
+    }
+
+    public static Vertical from(String s) {
+        return null;
     }
 }

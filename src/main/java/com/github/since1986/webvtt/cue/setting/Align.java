@@ -5,11 +5,6 @@ import com.github.since1986.webvtt.cue.CueSetting;
 public record Align(_Align align) implements EnumSetting {
 
     @Override
-    public CueSetting<Enum<?>> from(String s) {
-        return null;
-    }
-
-    @Override
     public String key() {
         return "align";
     }
@@ -21,5 +16,9 @@ public record Align(_Align align) implements EnumSetting {
 
     public enum _Align {
         START, CENTER, END
+    }
+
+    public static CueSetting<Enum<?>> from(String s) {
+        return null;
     }
 }

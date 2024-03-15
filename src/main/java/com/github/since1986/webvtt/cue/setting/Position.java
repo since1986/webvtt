@@ -5,11 +5,6 @@ import com.github.since1986.webvtt.cue.CueSetting;
 public record Position(int position) implements PercentageSetting {
 
     @Override
-    public CueSetting<Integer> from(String s) {
-        return null;
-    }
-
-    @Override
     public String key() {
         return "position";
     }
@@ -17,5 +12,9 @@ public record Position(int position) implements PercentageSetting {
     @Override
     public Integer value() {
         return position;
+    }
+
+    public static CueSetting<Integer> from(String s) {
+        return null;
     }
 }

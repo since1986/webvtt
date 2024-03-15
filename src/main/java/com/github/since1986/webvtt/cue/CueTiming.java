@@ -1,19 +1,31 @@
 package com.github.since1986.webvtt.cue;
 
-import com.github.since1986.webvtt.FromString;
 import com.github.since1986.webvtt.ToString;
+import com.github.since1986.webvtt.cue.timing.Time;
 
-public record CueTiming(String start, String end) implements ToString, FromString<CueTiming> {
+public record CueTiming(Time start, Time end) implements ToString {
 
-    public static final String DIRECTION_SYMBOL = "-->";
+    public static final String TIMING_DIRECTION_SYMBOL = "-->";
 
-    @Override
-    public String toString() {
-        return "%s %s %s".formatted(start, DIRECTION_SYMBOL, end);
+    static void check(Time start, Time end) {
+        if (start == null || end == null) {
+            throw new IllegalArgumentException("The start and end values are required.");
+        }
+        if (start.compareTo(end) >= 0) {
+            throw new IllegalArgumentException("The end must be after the start.");
+        }
+    }
+
+    public CueTiming {
+        CueTiming.check(start, end);
     }
 
     @Override
-    public CueTiming from(String s) {
+    public String toString() {
+        return "%s %s %s".formatted(start, TIMING_DIRECTION_SYMBOL, end);
+    }
+
+    public static CueTiming from(String s) {
         return null;
     }
 }
