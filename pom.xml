@@ -6,7 +6,7 @@
 
     <groupId>com.github.since1986</groupId>
     <artifactId>webvtt</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <repositories>
         <repository>
@@ -61,6 +61,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

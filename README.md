@@ -21,6 +21,7 @@ To use this library, you will need:
 You can add this library to your project as a dependency via Maven:
 
 ```xml
+
 <dependency>
     <groupId>com.github.since1986</groupId>
     <artifactId>webvtt</artifactId>
@@ -81,6 +82,48 @@ var vtt = new VTT(
 
 // System.out.println(vtt.to());
 ```
+
+Here is another example of how to use [VTTTime](src/main/java/com/github/since1986/webvtt/cue/timing/VTTTime.java). In this scenario, we aim to generate subtitles that print latitude and longitude information (which is read from a JSON file) every 200ms:
+
+```
+ClassLoader classLoader = this.getClass().getClassLoader();
+try (InputStream inputStream = classLoader.getResourceAsStream("vtt-time-test.json")) {
+    var objectMapper = new ObjectMapper();
+    var inputList = objectMapper.readValue(inputStream, new TypeReference<List<Map<String, String>>>() {
+    });
+    // Each cue spans 200ms
+    var cues = new ArrayList<VTTCue>();
+    var start = VTTTime.zero();
+    for (int i = 0; i < inputList.size(); i++) {
+        var current = inputList.get(i);
+        var end = start.plusMilliseconds(200L);
+        var payload = "%s - %s,%s".formatted(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), current.get("latitude"), current.get("longitude"));
+        var cue = new VTTCue(
+                String.valueOf(i),
+                new CueTiming(start.to(), end.to()),
+                List.of(
+                        new PercentageLine(60),
+                        new Size(20)
+                ),
+                payload
+        );
+        cues.add(cue);
+        start = end;
+    }
+    var vtt = new VTT(
+            new VTTHeader("测试每 200ms 打印一次字幕"),
+            new VTTBody(cues.toArray(new VTTBodyItem[]{}))
+    );
+    // Files.writeString(Path.of("input.vtt"), vtt.to(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+```
+
+If you want to test the subtitles in VLC, you can follow these steps:
+
+- Create a 10-minute test video: Use the command `ffmpeg -f lavfi -i testsrc=duration=600:size=1280x720:rate=30 -f lavfi -i sine=frequency=1000:duration=600 -c:v libx264 -c:a aac -strict experimental input.mp4` to generate a test video with a duration of 10 minutes.
+- Combine the WebVTT file generated from the example above with the video file to create an MKV file with soft subtitles: Execute the command `ffmpeg -i input.mp4 -i input.vtt -c copy -c:s webvtt output.mkv`.
+- Play the resulting MKV file in VLC to check the effects.
+
+<img src="src/test/resources/200ms.webp" alt="vlc play" width="60%" height="60%">
 
 ## Contributing
 
