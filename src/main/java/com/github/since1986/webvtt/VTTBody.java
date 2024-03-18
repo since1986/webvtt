@@ -1,7 +1,7 @@
 package com.github.since1986.webvtt;
 
 import com.github.since1986.webvtt.cue.VTTCue;
-import com.github.since1986.webvtt.cue.timing.Time;
+import com.github.since1986.webvtt.cue.timing.VTTRawTime;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -24,7 +24,7 @@ public record VTTBody(VTTBodyItem<?>... items) implements ToString {
         if (items == null || items.length == 0) {
             return;
         }
-        Time lastCheckedCueStart = null;
+        VTTRawTime lastCheckedCueStart = null;
         for (int i = 0; i < items.length; i++) {
             if (items[i] == null) {
                 throw new IllegalStateException("The body item must not be null (at item index %d).".formatted(i));
