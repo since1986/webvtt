@@ -35,7 +35,7 @@ You can add this library to your project as a dependency via Maven:
 <dependency>
     <groupId>com.github.since1986</groupId>
     <artifactId>webvtt</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
