@@ -21,7 +21,6 @@ To use this library, you will need:
 You can add this library to your project as a dependency via Maven:
 
 ```xml
-
 <repository>
     <id>github</id>
     <name>GitHub Packages</name>
@@ -30,7 +29,9 @@ You can add this library to your project as a dependency via Maven:
         <enabled>true</enabled>
     </snapshots>
 </repository>
+```
 
+```xml
 <dependency>
     <groupId>com.github.since1986</groupId>
     <artifactId>webvtt</artifactId>
@@ -40,15 +41,16 @@ You can add this library to your project as a dependency via Maven:
 
 ### Usage
 
+#### simple example
 Here is a simple example of how to create a WebVTT:
 
-```
+```java
 var vtt = new VTT(
         new VTTHeader(null),
         new VTTBody(
                 new VTTCue(
                         "1",
-                        new CueTiming(new Time(0, 1, 1, 10), new Time(0, 1, 1, 11)),
+                        new CueTiming(new VTTRawTime(0L, 1L, 1L, 10L), new VTTRawTime(0L, 1L, 1L, 11L)),
                         List.of(
                                 new NumberLine(1),
                                 new PercentageLine(1),
@@ -61,7 +63,7 @@ var vtt = new VTT(
                 new VTTComment("这是一个换行注释 > < & &gt; &lt; &amp;", true),
                 new VTTCue(
                         "2",
-                        new CueTiming(new Time(0, 1, 1, 11), new Time(9, 1, 1, 20)),
+                        new CueTiming(new VTTRawTime(0L, 1L, 1L, 11L), new VTTRawTime(9L, 1L, 1L, 20L)),
                         List.of(
                                 new NumberLine(1),
                                 new PercentageLine(1),
@@ -72,8 +74,7 @@ var vtt = new VTT(
                         ),
                         "test payload 2"
                 ),
-                new VTTComment("这是一个连行注释", false),
-                new VTTComment("这是又一个连行注释", false),
+                new VTTComment("这是一个单行的注释", false),
                 new VTTComment("""
                         这是一个多
                         行注释
@@ -84,9 +85,12 @@ var vtt = new VTT(
 // System.out.println(vtt.to());
 ```
 
+<br>
+
+#### example of how to use VTTTime
 Here is another example of how to use [VTTTime](src/main/java/com/github/since1986/webvtt/cue/timing/VTTTime.java). In this scenario, we aim to generate subtitles that print latitude and longitude information (which is read from a JSON file) every 200ms:
 
-```
+```java
 ClassLoader classLoader = this.getClass().getClassLoader();
 try (InputStream inputStream = classLoader.getResourceAsStream("vtt-time-test.json")) {
     var objectMapper = new ObjectMapper();
@@ -124,7 +128,7 @@ If you want to test the subtitles in VLC, you can follow these steps:
 - Combine the WebVTT file generated from the example above with the video file to create an MKV file with soft subtitles: Execute the command `ffmpeg -i input.mp4 -i input.vtt -c copy -c:s webvtt output.mkv`.
 - Play the resulting MKV file in VLC to check the effects.
 
-<img src="src/test/resources/200ms.webp" alt="vlc play" width="60%" height="60%">
+<img src="src/test/resources/200ms.webp" alt="vlc play">
 
 ## Contributing
 
