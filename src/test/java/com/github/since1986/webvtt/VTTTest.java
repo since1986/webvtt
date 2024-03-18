@@ -4,7 +4,7 @@ import com.github.since1986.webvtt.comment.VTTComment;
 import com.github.since1986.webvtt.cue.CueTiming;
 import com.github.since1986.webvtt.cue.VTTCue;
 import com.github.since1986.webvtt.cue.setting.*;
-import com.github.since1986.webvtt.cue.timing.Time;
+import com.github.since1986.webvtt.cue.timing.VTTRawTime;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ class VTTTest {
                 new VTTBody(
                         new VTTCue(
                                 "1",
-                                new CueTiming(new Time(0, 1, 1, 10), new Time(0, 1, 1, 11)),
+                                new CueTiming(new VTTRawTime(0L, 1L, 1L, 10L), new VTTRawTime(0L, 1L, 1L, 11L)),
                                 List.of(
                                         new NumberLine(1),
                                         new PercentageLine(1),
@@ -32,7 +32,7 @@ class VTTTest {
                         new VTTComment("这是一个换行注释 > < & &gt; &lt; &amp;", true),
                         new VTTCue(
                                 "2",
-                                new CueTiming(new Time(0, 1, 1, 11), new Time(9, 1, 1, 20)),
+                                new CueTiming(new VTTRawTime(0L, 1L, 1L, 11L), new VTTRawTime(9L, 1L, 1L, 20L)),
                                 List.of(
                                         new NumberLine(1),
                                         new PercentageLine(1),

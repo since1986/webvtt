@@ -11,11 +11,6 @@ public record VTTHeader(String textHeader) implements ToString {
         return "%s %s".formatted(FILE_HEADER, Optional.ofNullable(textHeader).orElse(""));
     }
 
-    @Override
-    public String to() {
-        return toString();
-    }
-
     public static VTTHeader from(String s) {
         return null;
     }

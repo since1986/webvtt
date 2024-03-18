@@ -25,6 +25,10 @@ import static com.github.since1986.webvtt.cue.CueTiming.TIMING_DIRECTION_SYMBOL;
 public record VTTCue(String identifier, CueTiming timing, List<? extends CueSetting<?>> settings, String payload) implements VTTBodyItem<VTTCue> {
 
     public VTTCue {
+        VTTCue.check(identifier, timing, settings, payload);
+    }
+
+    static void check(String identifier, CueTiming timing, List<? extends CueSetting<?>> settings, String payload) {
         var indexInIdentifier = identifier.indexOf(TIMING_DIRECTION_SYMBOL);
         if (indexInIdentifier != -1) {
             throw new IllegalArgumentException("Found an invalid character [%s] at position %d in the identifier string.".formatted(TIMING_DIRECTION_SYMBOL, indexInIdentifier));
