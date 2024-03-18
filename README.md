@@ -22,19 +22,20 @@ You can add this library to your project as a dependency via Maven:
 
 ```xml
 
+<repository>
+    <id>github</id>
+    <name>GitHub Packages</name>
+    <url>https://maven.pkg.github.com/since1986/webvtt</url>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+</repository>
+
 <dependency>
     <groupId>com.github.since1986</groupId>
     <artifactId>webvtt</artifactId>
     <version>1.0.2</version>
 </dependency>
-```
-
-Or using Gradle:
-
-```groovy
-dependencies {
-    implementation 'com.github.since1986:webvtt:1.0.2'
-}
 ```
 
 ### Usage

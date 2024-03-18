@@ -8,6 +8,25 @@
     <artifactId>webvtt</artifactId>
     <version>1.0.3</version>
 
+    <name>Java WebVTT Library</name>
+    <url>https://github.com/since1986/webvtt</url>
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>since1986</name>
+            <organizationUrl>https://github.com/since1986</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/since1986/webvtt.git</url>
+    </scm>
+
     <repositories>
         <repository>
             <id>aliyun</id>
@@ -29,16 +48,7 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <developers>
-        <developer>
-            <name>since1986</name>
-            <organizationUrl>https://github.com/since1986</organizationUrl>
-        </developer>
-    </developers>
-    <scm>
-        <url>https://github.com/since1986/webvtt.git</url>
-    </scm>
-
+    <!--  https://docs.github.com/en/actions/publishing-packages/publishing-java-packages-with-maven  -->
     <distributionManagement>
         <repository>
             <id>github</id>
