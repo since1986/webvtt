@@ -4,11 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.since1986</groupId>
-    <artifactId>webvtt</artifactId>
-    <version>1.0.3</version>
+    <!--  https://central.sonatype.org/publish/requirements/#introduction  -->
 
-    <name>Java WebVTT Library</name>
+    <groupId>io.github.since1986</groupId>
+    <artifactId>webvtt</artifactId>
+    <version>1.0.4</version>
+    <packaging>jar</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>🚧 This is an open-source library designed for structured creation and parsing of WebVTT (Web Video Text Tracks) files using Java.</description>
     <url>https://github.com/since1986/webvtt</url>
     <licenses>
         <license>
@@ -20,10 +24,14 @@
     <developers>
         <developer>
             <name>since1986</name>
+            <email>9mkiv1osa@mozmail.com</email>
+            <organization>since1986</organization>
             <organizationUrl>https://github.com/since1986</organizationUrl>
         </developer>
     </developers>
     <scm>
+        <connection>scm:git:git://github.com/since1986/webvtt.git</connection>
+        <developerConnection>scm:git:ssh://github.com/since1986/webvtt.git</developerConnection>
         <url>https://github.com/since1986/webvtt.git</url>
     </scm>
 
@@ -46,14 +54,23 @@
             <id>aliyun</id>
             <url>https://maven.aliyun.com/repository/public</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </pluginRepository>
     </pluginRepositories>
 
     <!--  https://docs.github.com/en/actions/publishing-packages/publishing-java-packages-with-maven  -->
     <distributionManagement>
+        <snapshotRepository>
+            <id>central-snapshots</id>
+            <!--  https://s01.oss.sonatype.org/content/repositories/snapshots -->
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/since1986/webvtt</url>
+            <id>central</id>
+            <!--  https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/  -->
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -106,6 +123,44 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -88,7 +88,8 @@ var vtt = new VTT(
 <br>
 
 #### example of how to use VTTTime
-Here is another example of how to use [VTTTime](src/main/java/com/github/since1986/webvtt/cue/timing/VTTTime.java). In this scenario, we aim to generate subtitles that print latitude and longitude information (which is read from a JSON file) every 200ms:
+
+Here is another example of how to use [VTTTime](src/main/java/io/github/since1986/webvtt/cue/timing/VTTTime.java). In this scenario, we aim to generate subtitles that print latitude and longitude information (which is read from a JSON file) every 200ms:
 
 ```java
 ClassLoader classLoader = this.getClass().getClassLoader();
@@ -124,11 +125,37 @@ try (InputStream inputStream = classLoader.getResourceAsStream("vtt-time-test.js
 
 If you want to test the subtitles in VLC, you can follow these steps:
 
-- Create a 10-minute test video: Use the command `ffmpeg -f lavfi -i testsrc=duration=600:size=1280x720:rate=30 -f lavfi -i sine=frequency=1000:duration=600 -c:v libx264 -c:a aac -strict experimental input.mp4` to generate a test video with a duration of 10 minutes.
-- Combine the WebVTT file generated from the example above with the video file to create an MKV file with soft subtitles: Execute the command `ffmpeg -i input.mp4 -i input.vtt -c copy -c:s webvtt output.mkv`.
-- Play the resulting MKV file in VLC to check the effects.
+Create a 10-minute test video: Use the command to generate a test video with a duration of 10 minutes.
+
+```shell
+ffmpeg -f lavfi -i testsrc=duration=600:size=1280x720:rate=30 -f lavfi -i sine=frequency=1000:duration=600 -c:v libx264 -c:a aac -strict experimental input.mp4
+```
+
+Combine the WebVTT file generated from the example above with the video file to create an MKV file with soft subtitles: Execute the command.
+
+```shell
+ffmpeg -i input.mp4 -i input.vtt -c copy -c:s webvtt output.mkv
+```
+
+Play the resulting MKV file in VLC to check the effects. (**NOTE** VLC does **not** support WebVTT cue settings)
 
 <img src="src/test/resources/200ms.webp" alt="vlc play">
+
+<br>
+
+#### example of cue settings (must use WebM)
+
+Create a 10-minute test video: Use the command:
+
+```shell
+ffmpeg -f lavfi -i testsrc=duration=600:size=1280x720:rate=30 -f lavfi -i sine=frequency=1000:duration=600 -c:v libvpx-vp9 -b:v 2M -c:a libopus -b:a 128k output.webm
+```
+
+Combine the WebVTT file generated from the example above with the video file
+
+```shell
+ffmpeg -i input.webm -i input.vtt -c copy -c:s webvtt output.webm
+```
 
 ## Contributing
 
@@ -145,3 +172,9 @@ This project is licensed under the Apache License Version 2.0 License see the [L
 ## Resources
 
 [Web Video Text Tracks Format (WebVTT)](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+
+[Live WebVTT Validator](https://w3c.github.io/webvtt.js/parser.html)
+
+[Can I use WebVTT - Web Video Text Tracks](https://caniuse.com/webvtt)
+
+[WebVTT: The Web Video Text Tracks Format](https://w3c.github.io/webvtt/)
