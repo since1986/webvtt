@@ -26,11 +26,9 @@ jobs:
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: SERVER_USERNAME
           server-password: SERVER_PASSWORD
-
-      - name: Import GPG key
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --yes --passphrase-fd 0 --quick-set-expiry $key 0
+          # https://stackoverflow.com/a/66218731
+          gpg-private-key: GPG_PRIVATE_KEY
+          gpg-passphrase: GPG_PASSPHRASE
 
       - name: Publish to Maven Central
         run: mvn --batch-mode deploy
