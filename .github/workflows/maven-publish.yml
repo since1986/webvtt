@@ -28,6 +28,10 @@ jobs:
           server-password: SERVER_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
 
+      - name: list-key
+        run: |
+         gpg --list-keys
+
       - name: Publish to Maven Central
         run: mvn --batch-mode deploy
         env:
