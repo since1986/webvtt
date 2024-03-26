@@ -39,6 +39,10 @@ jobs:
           server-password: SERVER_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
 
+      - name: import-key
+        run: |
+         echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
+
       - name: list-key
         run: |
          gpg --list-keys
