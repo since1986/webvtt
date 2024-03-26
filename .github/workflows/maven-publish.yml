@@ -33,16 +33,16 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         env:
-          SERVER_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          SERVER_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          SERVER_USERNAME: ${{ secrets.main.OSSRH_USERNAME }}
+          SERVER_PASSWORD: ${{ secrets.main.OSSRH_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.main.GPG_PRIVATE_KEY }}
         with:
           java-version: '17'
           distribution: 'temurin'
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: SERVER_USERNAME
-          server-password: SERVER_PASSWORD
-          gpg-private-key: GPG_PRIVATE_KEY
+          server-username: $SERVER_USERNAME
+          server-password: $SERVER_PASSWORD
+          gpg-private-key: $GPG_PRIVATE_KEY
 
       - name: show-m2
         run: |
