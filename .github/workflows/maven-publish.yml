@@ -32,6 +32,10 @@ jobs:
         run: |
          gpg --list-keys
 
+      - name: show-m2
+        run: |
+         cat ~/.m2/settings.xml
+
       - name: Publish to Maven Central
         run: mvn --batch-mode deploy
         env:
