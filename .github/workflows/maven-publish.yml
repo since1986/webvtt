@@ -17,6 +17,7 @@ jobs:
       contents: read
       packages: write
 
+    # https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md
     steps:
       - uses: actions/checkout@main
       
@@ -29,13 +30,13 @@ jobs:
           server-username: SERVER_USERNAME
           server-password: SERVER_PASSWORD
           gpg-private-key: GPG_PRIVATE_KEY
+          gpg-passphrase: GPG_PASSPHRASE
 
       - name: Publish package
         run: |
           mvn --batch-mode clean deploy -Dmaven.test.skip=true -Dmaven.javadoc.skip=false -Dgpg.skip=false
         env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          GPG_PRIVATE_KEY: ${{ env.GPG_PRIVATE_KEY }}
-
-
+          SERVER_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SERVER_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
