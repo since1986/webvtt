@@ -31,7 +31,7 @@ jobs:
           echo Current version of latest release: ["$RELEASE_VERSION"]
           # 版本号对比
           if [ "$POM_VERSION" != "$RELEASE_VERSION" ]; then
-            echo "Error: pom.xml version [($POM_VERSION)] does not match the latest release version [($RELEASE_VERSION)]."
+            echo -e "\e[31mError:\e[0m pom.xml version [\e[31m($POM_VERSION)\e[0m] does not match the latest release version [($RELEASE_VERSION)]."
             exit 1
           fi
         env:
