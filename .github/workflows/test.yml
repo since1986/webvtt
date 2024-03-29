@@ -42,8 +42,8 @@ jobs:
 
       - name: Check version
         run: |
-          apt update
-          apt -y install libxml2-utils
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
           # 获取 pom.xml 中的版本号，并去掉可能的 'v' 前缀
           POM_VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml | sed 's/^v//')
           # 获取最近的发布版本号
