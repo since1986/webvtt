@@ -2,7 +2,7 @@
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
 # https://docs.github.com/en/actions/publishing-packages/publishing-java-packages-with-maven
-name: Publish package to the Maven Central Repository
+name: Test
 
 on:
   release:
