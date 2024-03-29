@@ -53,3 +53,5 @@ jobs:
             echo "Error: pom.xml version ($POM_VERSION) does not match the latest release version ($RELEASE_VERSION)."
             exit 1
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
