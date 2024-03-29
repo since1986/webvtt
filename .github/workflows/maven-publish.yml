@@ -26,8 +26,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'liberica'
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
-          server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }}
+          server-id: central
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_PASSWORD }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -35,7 +35,7 @@ jobs:
 
       - name: Publish package
         run: |
-          mvn -X -e --batch-mode clean deploy -Dmaven.test.skip=true -Dmaven.javadoc.skip=false -Dgpg.skip=false -s $GITHUB_WORKSPACE/settings.xml
+          mvn -e --batch-mode clean deploy -s ${{ github.workspace }}/settings.xml
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
