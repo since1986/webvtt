@@ -35,4 +35,7 @@ jobs:
 
       - name: Publish package
         run: |
-          mvn --batch-mode clean deploy -Dmaven.test.skip=true -Dmaven.javadoc.skip=false -Dgpg.skip=false -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -s $GITHUB_WORKSPACE/settings.xml
+          mvn -X -e --batch-mode clean deploy -Dmaven.test.skip=true -Dmaven.javadoc.skip=false -Dgpg.skip=false -s $GITHUB_WORKSPACE/settings.xml
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
