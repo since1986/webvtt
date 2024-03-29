@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--  https://central.sonatype.org/publish/requirements/#introduction  -->
+    <!-- https://central.sonatype.org/publish/publish-portal-maven/ -->
 
     <groupId>io.github.since1986</groupId>
     <artifactId>webvtt</artifactId>
@@ -120,6 +121,7 @@
                 </executions>
             </plugin>
 
+            <!--  https://central.sonatype.org/publish/publish-portal-maven/  -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
@@ -127,6 +129,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <autoPublish>true</autoPublish>
+                    <ignorePublishedComponents>true</ignorePublishedComponents>
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                 </configuration>

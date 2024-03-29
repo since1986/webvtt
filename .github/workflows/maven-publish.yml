@@ -2,21 +2,50 @@
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
 # https://docs.github.com/en/actions/publishing-packages/publishing-java-packages-with-maven
-name: Publish package to the Maven Central Repository
+name: Publish To Maven Central Repository
 
 on:
   release:
     types: [ created ]
-  workflow_dispatch:
+  # 如果想手工触发,打开这个注释
+  #workflow_dispatch:
 
 jobs:
-  build:
-
+  check:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Check version
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
+          # 获取 pom.xml 中的版本号，并去掉可能的 'v' 前缀
+          POM_VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml | sed 's/^v//')
+          # 获取最近的发布版本号
+          RELEASE_VERSION=$(gh api repos/${{ github.repository }}/releases/latest | jq -r .tag_name | sed 's/^v//')
+          echo Current version in POM.xml: ["$POM_VERSION"]
+          echo Current version of latest release: ["$RELEASE_VERSION"]
+          # 版本号对比
+          if [ "$POM_VERSION" != "$RELEASE_VERSION" ]; then
+            echo "Error: pom.xml version [($POM_VERSION)] does not match the latest release version [($RELEASE_VERSION)]."
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    # 'check' 这个 job 通过了才允许运行
+    needs: check
+
+    # https://docs.github.com/en/actions/publishing-packages/publishing-java-packages-with-maven#publishing-packages-to-the-maven-central-repository
     # https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md
     steps:
       - uses: actions/checkout@v4
@@ -26,17 +55,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'liberica'
+          cache: 'maven'
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Show settings.xml
-        run: |
-          cat ~/.m2/settings.xml
-
       - name: Publish package
+        # mvn -X -e --batch-mode clean deploy
         run: |
           mvn -e --batch-mode clean deploy
         env:
