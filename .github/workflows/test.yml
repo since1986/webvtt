@@ -40,10 +40,16 @@ jobs:
         run: |
           gpg -vvv --list-keys && gpg -vvv --list-secret-keys
 
-      - name: Install GitHub CLI
+      - name: Check version
         run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-          sudo apt-add-repository https://cli.github.com/packages
-          sudo apt update -y
-          sudo apt install gh -y
-          gh
+          # 获取 pom.xml 中的版本号，并去掉可能的 'v' 前缀
+          POM_VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml | sed 's/^v//')
+          # 获取最近的发布版本号
+          RELEASE_VERSION=$(gh api repos/${{ github.repository }}/releases/latest | jq -r .tag_name | sed 's/^v//')
+          echo "$POM_VERSION"
+          echo "$RELEASE_VERSION"
+          # 版本号对比
+          if [ "$POM_VERSION" != "$RELEASE_VERSION" ]; then
+            echo "Error: pom.xml version ($POM_VERSION) does not match the latest release version ($RELEASE_VERSION)."
+            exit 1
+          fi
