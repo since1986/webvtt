@@ -8,7 +8,7 @@ on:
   release:
     types: [ created ]
   # 允许手工触发
-  workflow_dispatch:
+  #workflow_dispatch:
 
 jobs:
   check:
