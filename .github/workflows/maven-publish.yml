@@ -27,11 +27,11 @@ jobs:
           POM_VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml | sed 's/^v//')
           # 获取最近的发布版本号
           RELEASE_VERSION=$(gh api repos/${{ github.repository }}/releases/latest | jq -r .tag_name | sed 's/^v//')
-          echo Current version in POM.xml: ["$POM_VERSION"]
-          echo Current version of latest release: ["$RELEASE_VERSION"]
+          echo Current version in POM.xml: "$POM_VERSION"
+          echo Current version of latest release: "$RELEASE_VERSION"
           # 版本号对比
           if [ "$POM_VERSION" != "$RELEASE_VERSION" ]; then
-            echo -e "\e[31mError:\e[0m pom.xml version [\e[31m($POM_VERSION)\e[0m] does not match the latest release version [($RELEASE_VERSION)]."
+            echo -e "\e[31mError:\e[0m pom.xml version \e[31m($POM_VERSION)\e[0m does not match the latest release version ($RELEASE_VERSION)."
             exit 1
           fi
         env:
