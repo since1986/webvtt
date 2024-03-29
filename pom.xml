@@ -121,6 +121,7 @@
                 </executions>
             </plugin>
 
+            <!--  https://central.sonatype.org/publish/publish-portal-maven/  -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
