@@ -126,7 +126,7 @@ Combine the WebVTT file generated from the example above with the video file to 
 ffmpeg -i input.mp4 -i input.vtt -c copy -c:s webvtt output.mkv
 ```
 
-Play the resulting MKV file in VLC to check the effects. (**NOTE** VLC does **not** support WebVTT cue settings)
+Play the resulting MKV file in VLC to check the effects.
 
 <img src="src/test/resources/200ms.webp" alt="vlc play">
 
